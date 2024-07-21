@@ -12,15 +12,23 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
       background-color: #212121;
     }
 
     canvas {
-      /* scale: -1 1; */
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       object-fit: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
     }
   </style>
 </head>
