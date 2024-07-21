@@ -16,7 +16,7 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
     if (liveRenderTarget) {
       liveRenderTarget.width = window.innerWidth;
       liveRenderTarget.height = window.innerHeight;
-      // mediaStream.setRenderSize(window.innerWidth, window.innerHeight);
+      mediaStream.setRenderSize(window.innerWidth, window.innerHeight);
     }
   }
 
