@@ -11,19 +11,6 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
     },
   });
   await session.setSource(mediaStream);
-
-  async function resizeCanvas() {
-    liveRenderTarget.width = window.innerWidth;
-    liveRenderTarget.height = window.innerHeight;
-    await session['source'].setRenderSize(window.innerWidth, window.innerHeight);
-  }
-
-  // Call on initial load
-  await resizeCanvas();
-
-  // Add event listener for window resize
-  window.addEventListener('resize', resizeCanvas);
-
   await session.play();
 
   const lens = await cameraKit.lensRepository.loadLens(
