@@ -4,6 +4,21 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
   const cameraKit = await bootstrapCameraKit({ apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzEzMDk2NDUwLCJzdWIiOiIwMDM2ZDg0NS01ZmEzLTQ3YmYtOTI5Ny1kYzg2YzAwMjdkYzB-U1RBR0lOR35jNDEwODlhZC1hNWFjLTQyNmEtOTlmYy04MzUzY2UxY2ViNmEifQ.f_-wJbSAKSppVisqmQszxuMuruvLfpkfMDFZU6YHcn0' });
   const liveRenderTarget = document.getElementById('canvas') as HTMLCanvasElement;
   const session = await cameraKit.createSession({ liveRenderTarget });
+
+  function resizeCanvas() {
+    if (liveRenderTarget) {
+      liveRenderTarget.width = window.innerWidth;
+      liveRenderTarget.height = window.innerHeight;
+      session.setRenderSize(window.innerWidth, window.innerHeight);
+    }
+  }
+
+  // Call on initial load
+  resizeCanvas();
+
+  // Add event listener for window resize
+  window.addEventListener('resize', resizeCanvas);
+
   const mediaStream = await navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: { exact: "environment" },
