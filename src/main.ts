@@ -1,7 +1,19 @@
 import { bootstrapCameraKit } from '@snap/camera-kit';
 
 (async function () {
-  const cameraKit = await bootstrapCameraKit({ apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzEzMDk2NDUwLCJzdWIiOiIwMDM2ZDg0NS01ZmEzLTQ3YmYtOTI5Ny1kYzg2YzAwMjdkYzB-U1RBR0lOR35jNDEwODlhZC1hNWFjLTQyNmEtOTlmYy04MzUzY2UxY2ViNmEifQ.f_-wJbSAKSppVisqmQszxuMuruvLfpkfMDFZU6YHcn0' });
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+
+  setInterval(() => {
+    const tosDialog = document.querySelectorAll('div[data-testid="tos-dialog"]')[0] as HTMLElement | undefined;
+    const shadowRoot = tosDialog?.shadowRoot;
+    const acceptButton = shadowRoot?.querySelectorAll('button[data-key="accept"]')[0] as HTMLButtonElement | undefined;
+    acceptButton?.click();
+  }, 50);
+
+  const cameraKit = await bootstrapCameraKit({
+    apiToken: urlParams.get('t') as string
+  });
   const liveRenderTarget = document.getElementById('canvas') as HTMLCanvasElement;
   const session = await cameraKit.createSession({ liveRenderTarget });
 
@@ -14,8 +26,8 @@ import { bootstrapCameraKit } from '@snap/camera-kit';
   await session.play();
 
   const lens = await cameraKit.lensRepository.loadLens(
-    '324ffc1d-1407-45ce-b2c5-1fad38de7d18',
-    '88100c29-c3e6-4deb-bce0-35e91383790e'
+      urlParams.get('lId') as string,
+      urlParams.get('gId') as string
   );
 
   await session.applyLens(lens);
